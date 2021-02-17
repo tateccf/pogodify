@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import GlobalStyle from './globalStyles';
 import styled from 'styled-components';
 
 import SearchForm from './components/SearchForm';
 import SearchResult from './components/SearchResult';
 import Forecast from './components/Forecast';
+import Spinner from './components/Spinner';
 
 const AppWrapper = styled.div`
   width: 100%;
@@ -25,6 +26,7 @@ function App() {
   return (
     <AppWrapper>
       <GlobalStyle />
+
       <MainHeading>Pogodify</MainHeading>
       <SearchForm />
       <SearchResult />
