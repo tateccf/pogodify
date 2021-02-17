@@ -3,6 +3,7 @@ import GlobalStyle from './globalStyles';
 import styled from 'styled-components';
 
 import SearchForm from './components/SearchForm';
+import SearchResult from './components/SearchResult';
 
 const AppWrapper = styled.div`
   width: 100%;
@@ -25,6 +26,7 @@ function App() {
       <GlobalStyle />
       <MainHeading>Pogodify</MainHeading>
       <SearchForm />
+      <SearchResult />
     </AppWrapper>
   );
 }
