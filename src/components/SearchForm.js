@@ -25,10 +25,15 @@ const SearchInput = styled.input`
   }
 `;
 
-const SearchForm = () => {
+const SearchForm = ({ query, setQuery, handleSubmit }) => {
   return (
-    <FormWrapper>
-      <SearchInput type="text" placeholder="Enter city..." />
+    <FormWrapper onSubmit={handleSubmit}>
+      <SearchInput
+        value={query}
+        onChange={e => setQuery(e.target.value)}
+        type="text"
+        placeholder="Enter city..."
+      />
     </FormWrapper>
   );
 };

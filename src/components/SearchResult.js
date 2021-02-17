@@ -6,10 +6,11 @@ import {
   faCloud,
   faBolt,
   faCloudRain,
-  faCloudShowersHeavy,
   faSnowflake,
   faSun,
   faSmog,
+  faCloudSun,
+  faCloudSunRain,
 } from '@fortawesome/free-solid-svg-icons';
 
 const ResultWrapper = styled.div`
@@ -60,7 +61,7 @@ const Details = styled.div`
   font-size: 1.5rem;
   font-weight: 500;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
   justify-items: center;
   background-color: rgba(209, 199, 199, 0.2);
   border-radius: 1rem;
@@ -70,27 +71,57 @@ const DetailsItem = styled.p`
   padding: 1rem;
 `;
 
-const SearchResult = () => {
+const SearchResult = ({ data }) => {
+  const {
+    country,
+    date,
+    description,
+    high,
+    humidity,
+    low,
+    name,
+    sunrise,
+    sunset,
+    temp,
+    pressure,
+  } = data;
+
+  console.log(description);
+
+  function getIcon() {
+    if (description === 'clear sky') return faSun;
+    if (description === 'scattered clouds') return faCloud;
+    if (description === 'few clouds') return faCloudSun;
+    if (description === 'broken clouds') return faCloud;
+    if (description === 'shower rain') return faCloudSunRain;
+    if (description === 'rain') return faCloudRain;
+    if (description === 'thunderstorm') return faBolt;
+    if (description === 'snow') return faSnowflake;
+    if (description === 'mist') return faSmog;
+  }
+
   return (
     <ResultWrapper>
-      <CityName>Warsaw, PL</CityName>
-      <Date>Monday, 15th February</Date>
+      <CityName>
+        {name}, {country}
+      </CityName>
+      <Date>{date}</Date>
       <CurrentWeather>
         <WeatherIcon>
-          <FontAwesomeIcon icon={faSnowflake} />
+          <FontAwesomeIcon icon={getIcon()} />
         </WeatherIcon>
         <DataContainer>
-          <Temperature>-4&deg;</Temperature>
-          <Description>Snow</Description>
+          <Temperature>{temp}&deg;</Temperature>
+          <Description>{description}</Description>
         </DataContainer>
       </CurrentWeather>
       <Details>
-        <DetailsItem>High: 5&deg;C</DetailsItem>
+        <DetailsItem>High: {high}&deg;C</DetailsItem>
         <DetailsItem>Low: -2&deg;C</DetailsItem>
-        <DetailsItem>Humidity: 95%</DetailsItem>
-        <DetailsItem>Rain: 90%</DetailsItem>
-        <DetailsItem>Sunrise: 07:23</DetailsItem>
-        <DetailsItem>Sunset: 19:28</DetailsItem>
+        <DetailsItem>Humidity: {humidity}%</DetailsItem>
+        <DetailsItem>Press.: {pressure} mb</DetailsItem>
+        <DetailsItem>Sunrise: {sunrise}</DetailsItem>
+        <DetailsItem>Sunset: {sunset}</DetailsItem>
       </Details>
     </ResultWrapper>
   );
