@@ -60,7 +60,7 @@ const Details = styled.div`
   font-size: 1.5rem;
   font-weight: 500;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
   justify-items: center;
   background-color: rgba(209, 199, 199, 0.2);
   border-radius: 1rem;

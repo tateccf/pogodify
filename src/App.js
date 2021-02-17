@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import SearchForm from './components/SearchForm';
 import SearchResult from './components/SearchResult';
+import Forecast from './components/Forecast';
 
 const AppWrapper = styled.div`
   width: 100%;
@@ -27,6 +28,7 @@ function App() {
       <MainHeading>Pogodify</MainHeading>
       <SearchForm />
       <SearchResult />
+      <Forecast />
     </AppWrapper>
   );
 }
