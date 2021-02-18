@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import GlobalStyle from './globalStyles';
+import axios from 'axios';
 import moment from 'moment';
 import styled from 'styled-components';
 import getCurrentWeather from './api/getCurrentWeather';
@@ -9,8 +10,6 @@ import SearchForm from './components/SearchForm';
 import SearchResult from './components/SearchResult';
 import Forecast from './components/Forecast';
 import Spinner from './components/Spinner';
-
-import axios from 'axios';
 import NotFound from './components/NotFound';
 
 const AppWrapper = styled.div`
