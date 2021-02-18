@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import GlobalStyle from './globalStyles';
-import axios from 'axios';
 import moment from 'moment';
 import styled from 'styled-components';
 import getCurrentWeather from './api/getCurrentWeather';
