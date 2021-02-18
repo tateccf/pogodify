@@ -1,16 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-
+import getIcon from '../helpers/getIcon';
+import Spinner from './Spinner';
+import moment from 'moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faCloud,
-  faBolt,
-  faCloudRain,
-  faCloudShowersHeavy,
-  faSnowflake,
-  faSun,
-  faSmog,
-} from '@fortawesome/free-solid-svg-icons';
 
 const ForecastWrapper = styled.div`
   width: 100%;
@@ -27,7 +20,8 @@ const ForecastTitle = styled.h4`
 `;
 const ForecastCard = styled.div`
   padding: 2rem;
-  min-width: 100%;
+  min-width: 27rem;
+  max-width: 35rem;
   margin-left: 4rem;
   background-color: rgba(209, 199, 199, 0.2);
   border-radius: 1rem;
@@ -43,10 +37,7 @@ const CardDate = styled.div`
   justify-content: center;
   font-size: 1.5rem;
 `;
-const CardWeekday = styled.p`
-  margin-right: 1.2rem;
-  font-weight: 600;
-`;
+
 const CardDay = styled.p``;
 const CardDetails = styled.div`
   width: 100%;
@@ -71,46 +62,38 @@ const CardTemperatures = styled.p`
 
 const CardDescription = styled.p`
   text-align: center;
+  padding: 1.5rem;
   margin-top: -2rem;
   font-size: 2.2rem;
 `;
 
-const Forecast = () => {
+const Forecast = ({ data }) => {
+  function renderForecast() {
+    return data.map((forecast, idx) => (
+      <ForecastCard key={forecast.dt}>
+        <CardDate>
+          <CardDay>{moment.unix(forecast.dt).format('dddd Do MMMM')}</CardDay>
+        </CardDate>
+        <CardDetails>
+          <CardIconTempWrapper>
+            <CardIcon>
+              <FontAwesomeIcon icon={getIcon(forecast.weather[0].main)} />
+            </CardIcon>
+            <CardTemperatures>
+              {Math.round(forecast.temp.max)}&deg;C / {Math.round(forecast.temp.min)}
+              &deg;C
+            </CardTemperatures>
+          </CardIconTempWrapper>
+        </CardDetails>
+        <CardDescription>{forecast.weather[0].description}</CardDescription>
+      </ForecastCard>
+    ));
+  }
+  if (!data) return <Spinner />;
   return (
     <>
       <ForecastTitle>Forecast</ForecastTitle>
-      <ForecastWrapper>
-        <ForecastCard>
-          <CardDate>
-            <CardWeekday>Wednesday</CardWeekday>
-            <CardDay>16/02/2021</CardDay>
-          </CardDate>
-          <CardDetails>
-            <CardIconTempWrapper>
-              <CardIcon>
-                <FontAwesomeIcon icon={faCloud} />
-              </CardIcon>
-              <CardTemperatures>-3&deg;C / 4&deg;C</CardTemperatures>
-            </CardIconTempWrapper>
-          </CardDetails>
-          <CardDescription>Cloudy</CardDescription>
-        </ForecastCard>
-        <ForecastCard>
-          <CardDate>
-            <CardWeekday>Wednesday</CardWeekday>
-            <CardDay>16/02/2021</CardDay>
-          </CardDate>
-          <CardDetails>
-            <CardIconTempWrapper>
-              <CardIcon>
-                <FontAwesomeIcon icon={faCloud} />
-              </CardIcon>
-              <CardTemperatures>-3&deg;C / 4&deg;C</CardTemperatures>
-            </CardIconTempWrapper>
-          </CardDetails>
-          <CardDescription>Cloudy</CardDescription>
-        </ForecastCard>
-      </ForecastWrapper>
+      <ForecastWrapper>{renderForecast()}</ForecastWrapper>
     </>
   );
 };

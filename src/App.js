@@ -3,18 +3,23 @@ import GlobalStyle from './globalStyles';
 import moment from 'moment';
 import styled from 'styled-components';
 import getCurrentWeather from './api/getCurrentWeather';
+import getForecast from './api/getForecast';
 
 import SearchForm from './components/SearchForm';
 import SearchResult from './components/SearchResult';
 import Forecast from './components/Forecast';
 import Spinner from './components/Spinner';
 
+import axios from 'axios';
+
 const AppWrapper = styled.div`
   width: 100%;
+  margin: 0 auto;
   height: 100%;
   padding: 2rem;
   display: flex;
   flex-direction: column;
+  max-width: 1200px;
 `;
 
 const MainHeading = styled.h1`
@@ -25,13 +30,15 @@ const MainHeading = styled.h1`
 `;
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [query, setQuery] = useState('');
   const [weather, setWeather] = useState(null);
   const [forecast, setForecast] = useState(null);
 
   async function handleSubmit(e) {
+    setIsLoading(true);
+    setWeather(null);
     e.preventDefault();
     try {
       const res = await getCurrentWeather({
@@ -40,8 +47,9 @@ function App() {
           units: 'metric',
         },
       });
+
       const weatherData = {
-        date: moment(new Date()).format('LLLL'),
+        date: moment().format('dddd Do MMMM, YYYY'),
         name: res.data.name,
         temp: Math.round(res.data.main.temp),
         country: res.data.sys.country,
@@ -54,14 +62,23 @@ function App() {
           .toLocaleTimeString()
           .slice(0, 5),
         humidity: res.data.main.humidity,
-        description: res.data.weather[0].description,
+        description: res.data.weather[0].main,
         pressure: res.data.main.pressure,
       };
 
-      const forecastRes = await setWeather(weatherData);
+      const forecastRes = await getForecast({
+        params: {
+          lat: res.data.coord.lat,
+          lon: res.data.coord.lon,
+        },
+      });
+
+      setWeather(weatherData);
+      setForecast(forecastRes.data.daily.slice(1, -1));
     } catch (err) {
       console.log(err.message);
     }
+    setIsLoading(false);
   }
 
   return (
@@ -69,8 +86,10 @@ function App() {
       <GlobalStyle />
       <MainHeading>Pogodify</MainHeading>
       <SearchForm handleSubmit={handleSubmit} query={query} setQuery={setQuery} />
+
+      {isLoading ? <Spinner /> : null}
       {weather && <SearchResult data={weather} />}
-      {weather && <Forecast />}
+      {weather && <Forecast data={forecast} />}
     </AppWrapper>
   );
 }

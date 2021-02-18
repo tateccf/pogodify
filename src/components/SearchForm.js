@@ -1,9 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 const FormWrapper = styled.form`
   margin: 2rem auto;
   width: 90%;
+  position: relative;
 `;
 const SearchInput = styled.input`
   display: block;
@@ -25,15 +28,32 @@ const SearchInput = styled.input`
   }
 `;
 
+const SearchIcon = styled.button`
+  border: none;
+  background-color: transparent;
+  color: grey;
+  font-size: 2rem;
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  outline: none;
+  border-left: 1px solid grey;
+  padding-left: 0.7rem;
+`;
+
 const SearchForm = ({ query, setQuery, handleSubmit }) => {
   return (
     <FormWrapper onSubmit={handleSubmit}>
       <SearchInput
+        autoFocus
         value={query}
         onChange={e => setQuery(e.target.value)}
         type="text"
         placeholder="Enter city..."
       />
+      <SearchIcon type="submit">
+        <FontAwesomeIcon icon={faSearch} />
+      </SearchIcon>
     </FormWrapper>
   );
 };
