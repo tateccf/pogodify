@@ -1,11 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import getIcon from '../helpers/getIcon';
-
+import ResultFadeIn from './ResultFadeIn';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const ResultWrapper = styled.div`
   margin-top: 1rem;
+  opacity: 0;
+  visibility: hidden;
+  animation: ${ResultFadeIn} 0.8s forwards;
   @media screen and (min-width: 480px) {
   }
 `;

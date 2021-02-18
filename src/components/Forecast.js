@@ -4,12 +4,16 @@ import getIcon from '../helpers/getIcon';
 import Spinner from './Spinner';
 import moment from 'moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ResultFadeIn from './ResultFadeIn';
 
 const ForecastWrapper = styled.div`
   width: 100%;
   margin-top: 2rem;
   display: flex;
   overflow-x: scroll;
+  opacity: 0;
+  visibility: hidden;
+  animation: ${ResultFadeIn} 0.8s forwards;
 `;
 const ForecastTitle = styled.h4`
   margin-top: 4rem;

@@ -11,6 +11,7 @@ import Forecast from './components/Forecast';
 import Spinner from './components/Spinner';
 
 import axios from 'axios';
+import NotFound from './components/NotFound';
 
 const AppWrapper = styled.div`
   width: 100%;
@@ -39,6 +40,7 @@ function App() {
   async function handleSubmit(e) {
     setIsLoading(true);
     setWeather(null);
+    setError(null);
     e.preventDefault();
     try {
       const res = await getCurrentWeather({
@@ -72,11 +74,11 @@ function App() {
           lon: res.data.coord.lon,
         },
       });
-
+      setQuery('');
       setWeather(weatherData);
       setForecast(forecastRes.data.daily.slice(1, -1));
     } catch (err) {
-      console.log(err.message);
+      setError(err.message);
     }
     setIsLoading(false);
   }
@@ -86,7 +88,7 @@ function App() {
       <GlobalStyle />
       <MainHeading>Pogodify</MainHeading>
       <SearchForm handleSubmit={handleSubmit} query={query} setQuery={setQuery} />
-
+      {error ? <NotFound msg={error} /> : null}
       {isLoading ? <Spinner /> : null}
       {weather && <SearchResult data={weather} />}
       {weather && <Forecast data={forecast} />}
