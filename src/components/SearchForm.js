@@ -6,6 +6,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 const FormWrapper = styled.form`
   margin: 2rem auto;
   width: 90%;
+  max-width: 800px;
   position: relative;
 `;
 const SearchInput = styled.input`

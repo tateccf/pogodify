@@ -39,7 +39,7 @@ const WeatherIcon = styled.div`
   align-items: center;
   @media screen and (min-width: 480px) {
     font-size: 10rem;
-    margin-right: 8rem;
+    margin-right: 20rem;
   }
 `;
 

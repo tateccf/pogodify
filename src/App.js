@@ -22,6 +22,7 @@ const AppWrapper = styled.div`
 `;
 
 const MainHeading = styled.h1`
+  margin-top: 2rem;
   font-size: 3rem;
   font-weight: 300;
   align-self: center;
@@ -85,7 +86,12 @@ function App() {
     <AppWrapper>
       <GlobalStyle />
       <MainHeading>Pogodify</MainHeading>
-      <SearchForm handleSubmit={handleSubmit} query={query} setQuery={setQuery} />
+      <SearchForm
+        data={weather}
+        handleSubmit={handleSubmit}
+        query={query}
+        setQuery={setQuery}
+      />
       {error ? <NotFound msg={error} /> : null}
       {isLoading ? <Spinner /> : null}
       {weather && <SearchResult data={weather} />}
