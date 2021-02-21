@@ -37,7 +37,7 @@ const NotFoundText = styled.span`
 const NotFound = ({ msg }) => {
   function errorMessage() {
     if (msg.includes('404')) {
-      return `We could'nt find that location. Please check and try again.`;
+      return `We couldn't find that location. Please check and try again.`;
     } else {
       return msg;
     }
