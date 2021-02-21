@@ -18,7 +18,7 @@ const NotFoundWrapper = styled.div`
   top: 20px;
   background-color: rgba(255, 255, 255, 0.3);
   border-radius: 10px;
-  animation: ${ResultFadeIn} 0.5s 1.4s forwards;
+  animation: ${ResultFadeIn} 0.5s forwards;
 `;
 
 const NotfoundIcon = styled.span`
@@ -35,12 +35,19 @@ const NotFoundText = styled.span`
 `;
 
 const NotFound = ({ msg }) => {
+  function errorMessage() {
+    if (msg.includes('404')) {
+      return `We could'nt find that location. Please check and try again.`;
+    } else {
+      return msg;
+    }
+  }
   return (
     <NotFoundWrapper>
       <NotfoundIcon>
         <FontAwesomeIcon icon={faFrown} />
       </NotfoundIcon>
-      <NotFoundText>{msg}</NotFoundText>
+      <NotFoundText>{errorMessage()}</NotFoundText>
     </NotFoundWrapper>
   );
 };
